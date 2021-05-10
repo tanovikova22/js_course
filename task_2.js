@@ -10,6 +10,7 @@
 // if it's not possible to use string.length
 
 function lettersNum(string) {
+    string = typeof string === String ? string : string + ''
     let num = 0;
     while (string[num]) {
         num++;
@@ -18,3 +19,6 @@ function lettersNum(string) {
 }
 
 console.log(lettersNum('world'))
+console.log(lettersNum(121))
+console.log(lettersNum(true))
+console.log(lettersNum(false))

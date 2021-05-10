@@ -36,6 +36,9 @@ let users = [{
 //     }
 // })
 
-users.map(user => (user.age >= 18 && user.age <= 35) ?
-    user.isAdmin ? console.log('Admin entrance is allowed') :
-    (user.paid && !user.blocked && !user.badUsername) ? console.log('entrance is allowed') : console.log('entrance denied') : console.log('entrance denied'))
+users.map(user => {
+    !(user.age >= 18 && user.age <= 35) ?
+    console.log('entrance denied') : 
+    user.isAdmin ? console.log('Admin entrance is allowed') : 
+        (user.paid && !user.blocked && !user.badUsername) ? console.log('entrance is allowed') : console.log('entrance denied')
+})
