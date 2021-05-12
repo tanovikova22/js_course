@@ -19,29 +19,63 @@
 
 // Верфи и корабли должны создаваться с помощью функций-конструкторов.
 
-// let motorWerf = function () {
-
-// }
-
-// let sailWerf = function () {
-
-// }
 
 let Werf = function () {
     this.colorShip = function () {
-        return 'Cilired your ship'
+        console.log('Colored your ship ')
     }
 }
 
+let MotorWerf = function () {
+    this.build = function (ship) {
+        if (ship instanceof MotorShip) {
+            console.log('MotorShip is built')
+        }
+    }
+    this.repair = function (ship) {
+        if (ship instanceof MotorShip) {
+            console.log('MotorShip is repaired')
+        }
+    }
+    this.exchange = function (ship) {
+        if (ship instanceof MotorShip) {
+            return new MotorShip(ship.motorType, ship.material)
+        }
+    }
+
+}
+
+let SailWerf = function () {
+    this.build = function (ship) {
+        if (ship instanceof SailShip) {
+            console.log('SailShip is built')
+
+        }
+    }
+    this.repair = function (ship) {
+        if (ship instanceof SailShip) {
+            console.log('SailShip is repaired')
+        }
+    }
+    this.exchange = function (ship) {
+        if (ship instanceof SailShip) {
+            return new SailShip(ship.mastAmount, ship.sailSquare)
+        }
+    }
+}
+
+MotorWerf.prototype = new Werf()
+SailWerf.prototype = new Werf()
+
 let Ship = function () {
     this.sail = function () {
-        return "I am sailing"
+        console.log("I am sailing")
     }
 }
 
 let MotorShip = function (motorType, material) {
     this.motorType = motorType
-    this.matrial = material
+    this.material = material
 }
 
 let SailShip = function (mastAmount, sailSquare) {
@@ -52,5 +86,12 @@ let SailShip = function (mastAmount, sailSquare) {
 SailShip.prototype = new Ship()
 MotorShip.prototype = new Ship()
 
+
+///////////////////////////
+
 let shipSail = new SailShip('usual motor', 'metal')
 let shipMotor = new MotorShip(2, 200)
+let werf = new MotorWerf()
+werf.build(shipMotor)
+let a = werf.exchange(shipMotor)
+console.log(a)
