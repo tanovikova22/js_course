@@ -376,7 +376,12 @@ class Knight extends Figure {
       let x = indexX + allVariants[i].x;
       let y = indexY + allVariants[i].y;
 
-      if (x >= 0 && y >= 0 && x < 8 && y < 8) {
+      let isNotEndOfBoard = x >= 0 && y >= 0 && x < 8 && y < 8;
+
+      if (
+        isNotEndOfBoard &&
+        currentBoardSituation[x][y].figure.color != this.color
+      ) {
         possibleMoves.push(currentBoardSituation[x][y].name);
       }
     }
@@ -388,9 +393,9 @@ class Castle extends Figure {
   constructor(color) {
     super(color);
   }
-  //   getPossibleMove(currX, currY) {
-  //     //
-  //   }
+  getPossibleMove(currentBoardSituation, currX, currY) {
+    //
+  }
 }
 
 class Pawn extends Figure {
@@ -406,8 +411,10 @@ class Pawn extends Figure {
       if (currentBoardSituation[i][idxY].figure === "none") {
         allVariants.push(currentBoardSituation[i][idxY].name);
       } else if (
-        currentBoardSituation[i][i].figure !== "none" ||
-        currentBoardSituation[i][i - 1].figure !== "none"
+        (currentBoardSituation[i][i].figure !== "none" &&
+          currentBoardSituation[i][i].figure.color != this.color) ||
+        (currentBoardSituation[i][i - 1].figure !== "none" &&
+          currentBoardSituation[i][i].figure.color != this.color)
       ) {
         allVariants.push(currentBoardSituation[i][i].name);
       }
