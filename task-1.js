@@ -1,8 +1,7 @@
 class Board {
   constructor() {
     this.board = [
-      [
-        {
+      [{
           name: "1a",
           figure: "none"
         },
@@ -35,8 +34,7 @@ class Board {
           figure: "none"
         }
       ],
-      [
-        {
+      [{
           name: "2a",
           figure: "none"
         },
@@ -69,8 +67,7 @@ class Board {
           figure: "none"
         }
       ],
-      [
-        {
+      [{
           name: "3a",
           figure: "none"
         },
@@ -103,8 +100,7 @@ class Board {
           figure: "none"
         }
       ],
-      [
-        {
+      [{
           name: "4a",
           figure: "none"
         },
@@ -137,8 +133,7 @@ class Board {
           figure: "none"
         }
       ],
-      [
-        {
+      [{
           name: "5a",
           figure: "none"
         },
@@ -171,8 +166,7 @@ class Board {
           figure: "none"
         }
       ],
-      [
-        {
+      [{
           name: "6a",
           figure: "none"
         },
@@ -205,8 +199,7 @@ class Board {
           figure: "none"
         }
       ],
-      [
-        {
+      [{
           name: "7a",
           figure: "none"
         },
@@ -239,8 +232,7 @@ class Board {
           figure: "none"
         }
       ],
-      [
-        {
+      [{
           name: "8a",
           figure: "none"
         },
@@ -331,6 +323,41 @@ class Bishop extends Figure {
   constructor(color) {
     super(color);
   }
+  getPossibleMove(currentBoardSituation, indexX, indexY) {
+    let possibleMoves = []
+    let i = indexX + 1
+    let j = indexY + 1
+    while (i < 8 && j < 8 && currentBoardSituation[i][j].figure === 'none') {
+      possibleMoves.push(currentBoardSituation[i][j].name)
+      i++;
+      j++;
+    }
+    let k = indexX - 1
+    let t = indexY - 1
+    while (k >= 0 && t >= 0 && currentBoardSituation[k][t].figure === 'none') {
+      possibleMoves.push(currentBoardSituation[k][t].name)
+      k--;
+      t--;
+    }
+
+    let p = indexX - 1
+    let d = indexY + 1
+    while (p >= 0 && d < 8 && currentBoardSituation[p][d].figure === 'none') {
+      possibleMoves.push(currentBoardSituation[p][d].name)
+      p--;
+      d++;
+    }
+
+    let z = indexX + 1
+    let r = indexY - 1
+    while (z < 8 && r >= 0 && currentBoardSituation[z][r].figure === 'none') {
+      possibleMoves.push(currentBoardSituation[z][r].name)
+      z++;
+      r--;
+    }
+    return possibleMoves
+  }
+
 }
 class Knight extends Figure {
   constructor(color) {
@@ -338,8 +365,7 @@ class Knight extends Figure {
   }
   getPossibleMove(currentBoardSituation, indexX, indexY) {
     let possibleMoves = [];
-    let allVariants = [
-      {
+    let allVariants = [{
         x: -2,
         y: -1
       },
@@ -402,19 +428,72 @@ class Pawn extends Figure {
   constructor(color) {
     super(color);
     this.isChangePosible = false;
+    this.isFirstStep = true
+  }
+  changeFigura() {
+    // 
   }
   getPossibleMove(currentBoardSituation, idxX, idxY) {
     // TODO: add for the first step possibility to move to the 2 squares
     // TODO: add func for changing figure in the last square
+
+    // let possibleMoves = []
+    // let allVariants = [{
+    //     x: 1,
+    //     y: 0,
+    //     killFigura: false
+    //   },
+    //   {
+    //     x: 2,
+    //     y: 0,
+    //     isFirstStep: true,
+    //     killFigura: false
+    //   },
+    //   {
+    //     x: 1,
+    //     y: 1,
+    //     killFigura: true
+    //   },
+    //   {
+    //     x: 1,
+    //     y: -1,
+    //     killFigura: true
+    //   }
+    // ]
+
+    // for (let i = 0; i < allVariants.length; i++) {
+    //   let x = idxX + allVariants[i].x
+    //   let y = idxY + allVariants[i].y
+
+    //   let isNotEndOfBoard = x >= 0 && y >= 0 && x < 8 && y < 8;
+    //   let noFigure = currentBoardSituation[x][y].figure === 'none'
+
+    //   if (isNotEndOfBoard && noFigure && allVariants[i].killFigura === false) {
+    //     if(this.isFirstStep && allVariants[i].isFirstStep){
+
+    //     }
+    //     possibleMoves.push(currentBoardSituation[x][y].name)
+    //   }
+
+    //   // if (
+    //   //   isNotEndOfBoard &&
+    //   //   currentBoardSituation[x][y].figure.color != this.color
+    //   // ) {
+    //   //   possibleMoves.push(currentBoardSituation[x][y].name);
+    //   // }
+
+    // }
+    // return possibleMoves
+
     let allVariants = [];
+
     for (let i = idxX + 1; i < idxX + 2; i++) {
+      let notSameColor = currentBoardSituation[i][i].figure.color != this.color;
       if (currentBoardSituation[i][idxY].figure === "none") {
         allVariants.push(currentBoardSituation[i][idxY].name);
       } else if (
-        (currentBoardSituation[i][i].figure !== "none" &&
-          currentBoardSituation[i][i].figure.color != this.color) ||
-        (currentBoardSituation[i][i - 1].figure !== "none" &&
-          currentBoardSituation[i][i].figure.color != this.color)
+        (currentBoardSituation[i][i].figure !== "none" && notSameColor) ||
+        (currentBoardSituation[i][i - 1].figure !== "none" && notSameColor)
       ) {
         allVariants.push(currentBoardSituation[i][i].name);
       }
@@ -481,4 +560,4 @@ class Game {
 
 let game = new Game();
 game.startGame();
-console.log(game.moveFigura("2c", "3c"));
+console.log(game.moveFigura("2d", "3d"));
