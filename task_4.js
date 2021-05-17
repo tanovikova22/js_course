@@ -41,23 +41,17 @@ function TicketSystem() {
     }
 
     this.returnTicket = function (id) {
-        let isvalid = this.eventStack.find(event => {
-            return event.tickets.find(ticket => {
-                return ticket.id === id
-            })
-        })
-        if (isvalid) {
-            this.moneySum = this.moneySum - isvalid.price
-            this.eventStack = this.eventStack.map(ev => {
-                if (ev.name === isvalid.name) {
-                    ev.tickets = ev.tickets.filter(t => t.id != id)
-                }
-                return ev
-            })
-        } else {
-            return 'This ticket does not exist'
+        let ticketWithId;
+        for (let i = 0; i < this.eventStack.length; i++) {
+            ticketWithId = this.eventStack[i].tickets.find(ticket => ticket.id === +id)
+            if (ticketWithId) {
+                this.moneySum = this.moneySum - this.eventStack[i].price
+                this.eventStack[i].tickets = this.eventStack[i].tickets.filter(ticket => ticket.id != id)
+                return 'You have successfully returned ticket'
+            } else {
+                return 'No such ticket'
+            }
         }
-
     }
 }
 
@@ -73,3 +67,5 @@ console.log(ticketWindow.moneySum)
 console.log(ticketWindow.eventStack)
 console.log(ticketWindow.moneySum)
 console.log(ticketWindow.eventStack)
+console.log(ticketWindow.returnTicket(ticket1))
+console.log(ticketWindow.returnTicket(ticket3))
