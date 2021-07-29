@@ -75,7 +75,7 @@ function cleanDisplay(){
 
 }
 
-function inputValues(input){  
+function inputValues(input){     
 
   if(result) display.textContent = '';
   result = null;
