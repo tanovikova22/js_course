@@ -21,12 +21,15 @@ function callApiWithDelay(queryArray) {
     const nextQuery = queryArray.shift();
 
     if(nextQuery) {
+        const cached = localStorage.getItem(nextQuery);
+
         return new Promise(resolve => {
             setTimeout(() => {
-                resolve(apiCall(getGifUrl(nextQuery)));
+                cached ? resolve(JSON.parse(cached)) : resolve(apiCall(getGifUrl(nextQuery)));
             },500);
         }).then((response) => {
             displayGifs(response);
+            localStorage.setItem(nextQuery, JSON.stringify(response));
             callApiWithDelay(queryArray)
         });
     } else {
