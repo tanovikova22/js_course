@@ -17,14 +17,6 @@
 //     return arr
 // }
 
-// or
-
-function sortDesc(arr) {
-    arr.sort()
-    arr.reverse()
-    return arr
-}
-
 
 const numbers = [-20, 0, 10, -1000, 20, 30]
 console.log(sortDesc(numbers))
